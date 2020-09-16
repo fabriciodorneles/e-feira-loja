@@ -19,6 +19,7 @@ import Product from '../../components/Product';
 import api from '../../services/api';
 import ModalAddFood from '../../components/ModalAddProduct';
 import ModalEditProduct from '../../components/ModalEditProduct';
+import Cart from '../../components/Cart';
 
 interface IProduct {
     id: number;
@@ -146,7 +147,9 @@ const Dashboard: React.FC = () => {
                                 ))}
                         </ProductsContainer>
                     </div>
-                    <div className="sidebar">Sua Bolsa</div>
+                    <div className="sidebar">
+                        <Cart />
+                    </div>
                 </div>
             </Content>
         </Container>

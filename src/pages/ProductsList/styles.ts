@@ -16,7 +16,7 @@ export const Header = styled.div`
 `;
 
 export const HeaderContent = styled.div`
-    margin: 0px 40px;
+    margin: 0px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -75,23 +75,24 @@ export const HeaderContent = styled.div`
         }
         button.cart {
             font-family: 'Roboto';
-            font-weight: 700;
+            font-weight: 500;
             color: #fff;
             border: 0;
             margin-top: 5px;
-            padding: 12px 16px;
+            padding: 18px 20px;
             display: flex;
             background: #52a759;
             border-radius: 4px;
             align-items: center;
 
             p {
-                font-size: 14px;
-                margin-left: 8px;
+                display: block;
+                font-size: 18px;
+                margin-left: 16px;
             }
             @media (min-width: 580px) {
                 p {
-                    font-size: 16px;
+                    font-size: 18px;
                 }
                 svg {
                     width: 24px;
@@ -146,7 +147,7 @@ export const Content = styled.main`
         vertical-align: center;
     }
     .sidebar {
-        width: 30rem;
+        width: 19rem;
     }
 `;
 
