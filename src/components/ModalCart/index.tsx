@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import { FiPlus, FiMinus } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import Modal from '../Modal';
 import { useCart } from '../../hooks/cart';
 import { Form } from './styles';
@@ -54,9 +55,11 @@ const ModalCart: React.FC<IModalProps> = ({ isOpen, setIsOpen }) => {
                     <div className="total">
                         <h1>Total: R${cartTotal}</h1>
                     </div>
-                    <button className="completeOrder" type="button">
-                        FINALIZAR PEDIDO
-                    </button>
+                    <Link to="/confirm-order">
+                        <button className="completeOrder" type="button">
+                            FINALIZAR PEDIDO
+                        </button>
+                    </Link>
                 </header>
                 <section className="body">
                     {products.map((product) => (

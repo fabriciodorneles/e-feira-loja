@@ -30,7 +30,7 @@ const Dashboard: React.FC = () => {
     const [products, setProducts] = useState<IProduct[]>([]);
     const [cartModalOpen, setCartModalOpen] = useState(false);
 
-    const { totalItensInCart } = useCart();
+    const { totalItensInCart, cartTotalPrice } = useCart();
     const { width } = useWindowDimensions();
 
     useEffect(() => {
@@ -71,7 +71,10 @@ const Dashboard: React.FC = () => {
                                 }}
                             >
                                 <FiShoppingCart />
-                                <p>{totalItensInCart} Itens</p>
+                                <div className="buttonModal">
+                                    <p>{totalItensInCart} Itens</p>
+                                    <p>R${cartTotalPrice}</p>
+                                </div>
                             </button>
                         )}
                     </div>

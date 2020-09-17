@@ -18,10 +18,18 @@ export const Content = styled.div`
     width: 100%;
     max-width: 700px;
 
+    @media (max-width: 450px) {
+        img {
+            height: 200px;
+        }
+    }
     form {
         margin: 80px 0;
         width: 340px;
         text-align: center;
+        @media (max-height: 800px) {
+            margin: 20px 0;
+        }
 
         h1 {
             margin-bottom: 24px;
@@ -50,6 +58,9 @@ export const Content = styled.div`
         display: flex;
         align-items: center;
 
+        @media (max-height: 800px) {
+            margin: 0;
+        }
         svg {
             margin-right: 16px;
         }

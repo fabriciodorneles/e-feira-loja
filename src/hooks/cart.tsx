@@ -19,6 +19,7 @@ interface Product {
 interface CartContext {
     products: Product[];
     totalItensInCart: number;
+    cartTotalPrice: number;
     addToCart(item: Omit<Product, 'quantity'>): void;
     increment(id: string): void;
     decrement(id: string): void;
@@ -84,7 +85,6 @@ const CartProvider: React.FC = ({ children }) => {
                 const newItem = products.find((item) => item.id === product.id);
                 if (newItem) {
                     increment(newItem.id);
-                    console.log('item existente');
                 } else {
                     const newproduct = product;
                     newproduct.quantity = 1;
@@ -99,14 +99,38 @@ const CartProvider: React.FC = ({ children }) => {
             }
 
             await checkAndSetItem();
-            console.log(products);
         },
         [products, increment],
     );
 
+    const cartTotalPrice = useMemo(() => {
+        let Total = 0;
+
+        products.map((product) => {
+            Total += product.quantity * product.price;
+            return product;
+        });
+
+        return Total;
+    }, [products]);
+
     const value = React.useMemo(
-        () => ({ addToCart, increment, decrement, products, totalItensInCart }),
-        [products, addToCart, increment, decrement, totalItensInCart],
+        () => ({
+            addToCart,
+            increment,
+            decrement,
+            products,
+            totalItensInCart,
+            cartTotalPrice,
+        }),
+        [
+            products,
+            addToCart,
+            increment,
+            decrement,
+            totalItensInCart,
+            cartTotalPrice,
+        ],
     );
 
     return (

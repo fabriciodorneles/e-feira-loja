@@ -3,12 +3,12 @@ import { shade } from 'polished';
 import finishOrderBackground from '../../assets/finish-order-background.png';
 
 export const Container = styled.div`
-    display: flex;
     width: 100%;
     height: 100vh;
     flex-direction: column;
     align-items: center;
     background: #3bb946;
+    padding-bottom: 40px;
 `;
 
 export const Header = styled.div`
@@ -50,6 +50,8 @@ export const HeaderContent = styled.div`
 `;
 
 export const Content = styled.main`
+    margin-top: 20px;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -74,9 +76,15 @@ export const Content = styled.main`
         justify-content: center;
         text-align: center;
     }
+    @media (max-width: 450px) {
+        h1 {
+            font-size: 26px;
+        }
+    }
 
     .cart {
         margin-top: 24px;
+        margin-bottom: 30px;
         background: rgba(206, 212, 207, 0.31);
         justify-content: center;
         font-family: 'Roboto';
@@ -86,8 +94,7 @@ export const Content = styled.main`
         border-radius: 8px;
         padding: 20px 20px;
         @media (max-width: 450px) {
-            width: 130px;
-            height: 240px;
+            width: 350px;
         }
 
         header {
@@ -158,6 +165,29 @@ export const Content = styled.main`
                         font-size: 16px;
                     }
                     text-align: left;
+                }
+
+                @media (max-width: 450px) {
+                    div.productName {
+                        h2 {
+                            font-size: 15px;
+                            width: 140px;
+                        }
+                    }
+
+                    div.quantity {
+                        h2 {
+                            font-size: 15px;
+                            margin-left: 5px;
+                        }
+                    }
+
+                    div.price {
+                        h2 {
+                            font-size: 15px;
+                            margin-left: 12px;
+                        }
+                    }
                 }
 
                 div.quantityComponent {

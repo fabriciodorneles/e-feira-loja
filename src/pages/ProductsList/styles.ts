@@ -96,10 +96,14 @@ export const HeaderContent = styled.div`
                 display: block;
                 font-size: 18px;
                 margin-left: 16px;
+                & + p {
+                    margin-top: 4px;
+                }
             }
 
             @media (max-width: 1030px) {
                 border: 2px solid #fff;
+                padding: 10px 20px;
             }
             @media (min-width: 580px) {
                 p {
@@ -139,7 +143,9 @@ export const MenuBar = styled.div`
 `;
 
 export const Content = styled.main`
-    margin-top: 285px;
+    background: #fff;
+    margin-top: 255px;
+    padding-top: 30px;
     display: grid;
     flex: 1;
     width: 100%;
