@@ -13,6 +13,10 @@ export const Header = styled.div`
     background: #3bb946;
     display: flex;
     flex-direction: column;
+
+    position: fixed;
+
+    top: 0;
 `;
 
 export const HeaderContent = styled.div`
@@ -46,6 +50,7 @@ export const HeaderContent = styled.div`
     div.headerRight {
         display: flex;
         flex-direction: column;
+        align-items: space-between;
         height: 100%;
         padding-top: 24px;
         padding-bottom: 10px;
@@ -55,11 +60,13 @@ export const HeaderContent = styled.div`
             display: flex;
             flex-grow: 1;
             margin: auto;
+            margin-bottom: 60px;
             margin-right: 8px;
             font-family: 'Roboto';
             font-weight: 700;
             background-color: transparent;
             border: 0;
+
             p {
                 margin-left: 8px;
             }
@@ -89,6 +96,10 @@ export const HeaderContent = styled.div`
                 display: block;
                 font-size: 18px;
                 margin-left: 16px;
+            }
+
+            @media (max-width: 1030px) {
+                border: 2px solid #fff;
             }
             @media (min-width: 580px) {
                 p {
@@ -128,8 +139,7 @@ export const MenuBar = styled.div`
 `;
 
 export const Content = styled.main`
-    margin: 0 auto;
-    margin-top: 32px;
+    margin-top: 285px;
     display: grid;
     flex: 1;
     width: 100%;

@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 
 import { FiPlus, FiMinus } from 'react-icons/fi';
-import Button from '../Button';
 
+import { Link } from 'react-router-dom';
 import { Container } from './styles';
+import { useCart } from '../../hooks/cart';
 
 interface IProduct {
-    id: number;
+    id: string;
     name: string;
     avatar: string;
-    price: string;
-    quantity: string;
+    price: number;
+    quantity: number;
     description: string;
 }
 
@@ -21,74 +22,64 @@ interface IProps {
 }
 
 const Cart: React.FC = () => {
+    const { increment, decrement, products } = useCart();
+
+    function handleIncrement(id: string): void {
+        increment(id);
+    }
+
+    function handleDecrement(id: string): void {
+        decrement(id);
+    }
+
+    const cartTotal = useMemo(() => {
+        let Total = 0;
+
+        products.map((product) => {
+            Total += product.quantity * product.price;
+            return product;
+        });
+
+        return Total;
+    }, [products]);
+
     return (
         <Container>
             <header>
                 <div className="total">
-                    <h1>Total: R$137,00</h1>
+                    <h1>Total: R${cartTotal}</h1>
                 </div>
-                <button className="completeOrder" type="button">
-                    FINALIZAR PEDIDO
-                </button>
+                <Link to="/confirm-order">
+                    <button className="completeOrder" type="button">
+                        FINALIZAR PEDIDO
+                    </button>
+                </Link>
             </header>
             <section className="body">
-                <div className="product">
-                    <h2>Abacate</h2>
-                    <div className="quantityComponent">
-                        <button type="button" className="plus">
-                            <FiPlus />
-                        </button>
-                        <div className="quantity">
-                            <h3>10</h3>
+                {products.map((product) => (
+                    <div key={product.id} className="product">
+                        <h2>{product.name}</h2>
+                        <div className="quantityComponent">
+                            <button
+                                type="button"
+                                className="plus"
+                                onClick={() => handleIncrement(product.id)}
+                            >
+                                <FiPlus />
+                            </button>
+                            <div className="quantity">
+                                <h3>{product.quantity}</h3>
+                            </div>
+                            <button
+                                type="button"
+                                className="minus"
+                                onClick={() => handleDecrement(product.id)}
+                            >
+                                <FiMinus />
+                            </button>
                         </div>
-                        <button type="button" className="minus">
-                            <FiMinus />
-                        </button>
                     </div>
-                </div>
-                <div className="product">
-                    <h2>Fruta do Conde</h2>
-                    <div className="quantityComponent">
-                        <button type="button" className="plus">
-                            <FiPlus />
-                        </button>
-                        <div className="quantity">
-                            <h3>10</h3>
-                        </div>
-                        <button type="button" className="minus">
-                            <FiMinus />
-                        </button>
-                    </div>
-                </div>
-                <div className="product">
-                    <h2>Brocolis Americano</h2>
-                    <div className="quantityComponent">
-                        <button type="button" className="plus">
-                            <FiPlus />
-                        </button>
-                        <div className="quantity">
-                            <h3>10</h3>
-                        </div>
-                        <button type="button" className="minus">
-                            <FiMinus />
-                        </button>
-                    </div>
-                </div>
-
-                <div className="product">
-                    <h2>Mandioca</h2>
-                    <div className="quantityComponent">
-                        <button type="button" className="plus">
-                            <FiPlus />
-                        </button>
-                        <div className="quantity">
-                            <h3>10</h3>
-                        </div>
-                        <button type="button" className="minus">
-                            <FiMinus />
-                        </button>
-                    </div>
-                </div>
+                ))}
             </section>
         </Container>
     );

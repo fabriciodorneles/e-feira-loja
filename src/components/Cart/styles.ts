@@ -11,6 +11,7 @@ export const Container = styled.div`
     height: 100%;
     display: flex;
     flex-direction: column;
+    position: fixed;
     @media (max-width: 450px) {
         width: 130px;
         height: 240px;
@@ -75,6 +76,7 @@ export const Container = styled.div`
 
                 div.quantity {
                     display: flex;
+                    width: 30px;
                     align-items: center;
                     justify-content: center;
                     padding: 0 6px;

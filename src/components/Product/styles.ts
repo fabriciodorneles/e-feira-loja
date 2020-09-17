@@ -41,11 +41,14 @@ export const Container = styled.div`
 
     section.body {
         flex: 1 0 auto;
-        h2 {
-            font-family: 'Roboto';
-            font-weight: 700;
-            text-align: center;
-            color: #3d3d4d;
+        .name {
+            height: 60px;
+            h2 {
+                font-family: 'Roboto';
+                font-weight: 700;
+                text-align: center;
+                color: #3d3d4d;
+            }
         }
 
         p {

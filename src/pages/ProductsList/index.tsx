@@ -1,42 +1,37 @@
-import React, { useState, useCallback, useEffect } from 'react';
-import {
-    FiPlusSquare,
-    FiShoppingCart,
-    FiShoppingBag,
-    FiUser,
-} from 'react-icons/fi';
+import React, { useState, useEffect } from 'react';
+import { FiShoppingCart, FiUser } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 import {
     Container,
     Header,
     HeaderContent,
     MenuBar,
     Content,
-    Section,
     ProductsContainer,
 } from './styles';
 import logoImg from '../../assets/logo.svg';
 import Product from '../../components/Product';
 import api from '../../services/api';
-import ModalAddFood from '../../components/ModalAddProduct';
-import ModalEditProduct from '../../components/ModalEditProduct';
 import Cart from '../../components/Cart';
+import { useCart } from '../../hooks/cart';
+import useWindowDimensions from '../../hooks/useWindowDimensions';
+import ModalCart from '../../components/ModalCart';
 
 interface IProduct {
-    id: number;
+    id: string;
     name: string;
     avatar: string;
-    price: string;
-    quantity: string;
+    price: number;
+    quantity: number;
     description: string;
 }
 
 const Dashboard: React.FC = () => {
     const [products, setProducts] = useState<IProduct[]>([]);
-    const [editingProduct, setEditingProduct] = useState<IProduct>(
-        {} as IProduct,
-    );
-    const [modalOpen, setModalOpen] = useState(false);
-    const [editModalOpen, setEditModalOpen] = useState(false);
+    const [cartModalOpen, setCartModalOpen] = useState(false);
+
+    const { totalItensInCart } = useCart();
+    const { width } = useWindowDimensions();
 
     useEffect(() => {
         async function loadProducts(): Promise<void> {
@@ -46,68 +41,8 @@ const Dashboard: React.FC = () => {
         loadProducts();
     }, []);
 
-    async function handleAddFood(product: Omit<IProduct, 'id'>): Promise<void> {
-        try {
-            const productForAdd = {
-                available: true,
-                name: product.name,
-                avatar: product.avatar,
-                description: product.description,
-                price: product.price,
-                quantity: product.quantity,
-            };
-            const newProduct = await api.post('products', productForAdd);
-            if (newProduct) {
-                setProducts([...products, newProduct.data]);
-            }
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    async function handleUpdateProduct(
-        product: Omit<IProduct, 'id' | 'available'>,
-    ): Promise<void> {
-        await api.put(`products/${editingProduct.id}`, product);
-        const newProductsList = products.map((productItem) => {
-            if (productItem.id === editingProduct.id) {
-                const updatedProduct = {
-                    id: editingProduct.id,
-                    name: product.name,
-                    avatar: product.avatar,
-                    description: product.description,
-                    price: product.price,
-                    quantity: product.quantity,
-                };
-                return updatedProduct;
-            }
-            return productItem;
-        });
-        setProducts(newProductsList);
-    }
-
-    const handleDeleteFood = useCallback(
-        async (id: number): Promise<void> => {
-            await api.delete(`products/${id}`);
-            const productsList = products.filter(
-                (product) => product.id !== id,
-            );
-            setProducts(productsList);
-        },
-        [products],
-    );
-
-    function toggleModal(): void {
-        setModalOpen(!modalOpen);
-    }
-
-    function toggleEditModal(): void {
-        setEditModalOpen(!editModalOpen);
-    }
-
-    function handleEditProduct(product: IProduct): void {
-        setEditingProduct(product);
-        toggleEditModal();
+    function toggleCartModal(): void {
+        setCartModalOpen(!cartModalOpen);
     }
 
     return (
@@ -116,14 +51,29 @@ const Dashboard: React.FC = () => {
                 <HeaderContent>
                     <img src={logoImg} alt="EFeira" />
                     <div className="headerRight">
-                        <button type="button" className="user">
-                            <FiUser />
-                            <p>Login</p>
-                        </button>
-                        <button type="button" className="cart">
-                            <FiShoppingCart />
-                            <p>16 Itens</p>
-                        </button>
+                        <Link to="/signin" style={{ textDecoration: 'none' }}>
+                            <button type="button" className="user">
+                                <FiUser />
+                                <p>Login</p>
+                            </button>
+                        </Link>
+                        {totalItensInCart > 0 && window.innerWidth > 1030 ? (
+                            <button type="button" className="cart">
+                                <FiShoppingCart />
+                                <p>{totalItensInCart} Itens</p>
+                            </button>
+                        ) : (
+                            <button
+                                type="button"
+                                className="cart"
+                                onClick={() => {
+                                    toggleCartModal();
+                                }}
+                            >
+                                <FiShoppingCart />
+                                <p>{totalItensInCart} Itens</p>
+                            </button>
+                        )}
                     </div>
                 </HeaderContent>
 
@@ -131,7 +81,7 @@ const Dashboard: React.FC = () => {
                     <h1>FAÇA SUA FEIRA!</h1>
                 </MenuBar>
             </Header>
-
+            <ModalCart isOpen={cartModalOpen} setIsOpen={toggleCartModal} />
             <Content>
                 <div className="loja">
                     <div className="products">
@@ -141,15 +91,15 @@ const Dashboard: React.FC = () => {
                                     <Product
                                         key={product.id}
                                         product={product}
-                                        handleDelete={handleDeleteFood}
-                                        handleEditFood={handleEditProduct}
                                     />
                                 ))}
                         </ProductsContainer>
                     </div>
-                    <div className="sidebar">
-                        <Cart />
-                    </div>
+                    {totalItensInCart > 0 && window.innerWidth > 1030 && (
+                        <div className="sidebar">
+                            <Cart />
+                        </div>
+                    )}
                 </div>
             </Content>
         </Container>
