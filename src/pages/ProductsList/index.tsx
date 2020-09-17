@@ -14,7 +14,6 @@ import Product from '../../components/Product';
 import api from '../../services/api';
 import Cart from '../../components/Cart';
 import { useCart } from '../../hooks/cart';
-import useWindowDimensions from '../../hooks/useWindowDimensions';
 import ModalCart from '../../components/ModalCart';
 
 interface IProduct {
@@ -31,7 +30,6 @@ const Dashboard: React.FC = () => {
     const [cartModalOpen, setCartModalOpen] = useState(false);
 
     const { totalItensInCart } = useCart();
-    const { width } = useWindowDimensions();
 
     useEffect(() => {
         async function loadProducts(): Promise<void> {

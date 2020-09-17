@@ -1,14 +1,10 @@
-import React, { useState, useEffect, useMemo } from 'react';
-import { FiMinus, FiPlus, FiShoppingCart, FiUser } from 'react-icons/fi';
+import React, { useMemo } from 'react';
+import { FiMinus, FiPlus } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
 import { Container, Header, HeaderContent, Content } from './styles';
 import logoImg from '../../assets/logo.svg';
-import Product from '../../components/Product';
-import api from '../../services/api';
-import Cart from '../../components/Cart';
 import { useCart } from '../../hooks/cart';
-import useWindowDimensions from '../../hooks/useWindowDimensions';
-import ModalCart from '../../components/ModalCart';
+// import useWindowDimensions from '../../hooks/useWindowDimensions';
 
 interface IProduct {
     id: string;
@@ -21,7 +17,7 @@ interface IProduct {
 
 const ConfirmOrder: React.FC = () => {
     const { products, increment, decrement } = useCart();
-    const { width } = useWindowDimensions();
+    // const { width } = useWindowDimensions();
 
     function handleIncrement(id: string): void {
         increment(id);

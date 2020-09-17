@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Form as Unform } from '@unform/web';
 import { shade } from 'polished';
 
 export const Form = styled.div`

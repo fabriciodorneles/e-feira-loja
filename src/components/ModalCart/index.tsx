@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react';
 import { FiPlus, FiMinus } from 'react-icons/fi';
 import Modal from '../Modal';
-import Cart from '../Cart';
 import { useCart } from '../../hooks/cart';
 import { Form } from './styles';
 
